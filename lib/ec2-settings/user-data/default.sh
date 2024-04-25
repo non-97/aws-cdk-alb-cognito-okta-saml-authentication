@@ -8,10 +8,16 @@ exec > >(tee /var/log/user-data.log | logger -t user-data -s 2>/dev/console) 2>&
 
 # Install Packages
 
-dnf install -y httpd
+dnf install -y \
+  httpd \
+  php
 
 systemctl enable httpd --now
 
 tee /var/www/html/index.html <<EOF
 index.html
+EOF
+
+tee /var/www/html/phpinfo.php <<EOF
+<?php phpinfo(); ?>
 EOF
